@@ -17,10 +17,10 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4
         env:
           # JFrog platform url (for example: https://acme.jfrog.io)
-          JF_URL: https://hts1.jfrog.io 
+          JF_URL: https://hts2.jfrog.io 
         with:
           # Name of the OIDC provider as specified on the OIDC integration page in the JFrog Platform
-          oidc-provider-name: prasanna-github-oidc
+          oidc-provider-name: hs-gh
 
       - name: Run JFrog CLI
         run: |
