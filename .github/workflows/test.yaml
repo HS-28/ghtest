@@ -20,7 +20,7 @@ jobs:
           JF_URL: https://${{ vars.JF_URL }}/
         with:
           # Name of the OIDC provider as specified on the OIDC integration page in the JFrog Platform
-          oidc-provider-name: hs-hts1
+          oidc-provider-name: hs-gh
 
       - name: Run JFrog CLI
         run: |
