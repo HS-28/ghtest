@@ -1,4 +1,4 @@
-name: "Setup JFrog CLI OIDC Example"
+name: "RLM with Curation"
 on:
   workflow_dispatch:
 
@@ -26,10 +26,4 @@ jobs:
         run: |
           # Ping the server
           jf rt ping
-          jf c s
-          # Collect environment variables for the build
-          # jf rt bce
-          # Collect VCS details from git and add them to the build
-          #jf rt bag
-          # Publish build info
-          # jf rt bp
+          jf docker pull hts1-hs-prod-docker.jfrog.io/mcp/slack
