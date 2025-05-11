@@ -26,4 +26,4 @@ jobs:
         run: |
           # Ping the server
           jf rt ping
-          jf docker pull hts1-hs-prod-docker.jfrog.io/mcp/slack
+          jf docker pull hts1-hs-qav.jfrog.io/mcp/slack
