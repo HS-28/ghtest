@@ -1,4 +1,4 @@
-name: "RLM with Curation"
+name: "S1"
 on:
   workflow_dispatch:
 
@@ -20,10 +20,10 @@ jobs:
           JF_URL: https://${{ vars.JF_URL }}/
         with:
           # Name of the OIDC provider as specified on the OIDC integration page in the JFrog Platform
-          oidc-provider-name: hs-gh
+          oidc-provider-name: hs-hts1
 
       - name: Run JFrog CLI
         run: |
           # Ping the server
           jf rt ping
-          jf docker pull hts1-hs-qav.jfrog.io/mcp/slack
+          jf docker pull hts1-hs-prod-docker.jfrog.io/mcp/slack
