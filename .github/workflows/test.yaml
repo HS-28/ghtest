@@ -26,4 +26,4 @@ jobs:
         run: |
           # Ping the server
           jf rt ping
-          jf docker pull hts2-hs-new-docker.jfrog.io/zombie/os:test
+          jf docker pull hts2-hs-new-docker.jfrog.io/nimak/helloworld
