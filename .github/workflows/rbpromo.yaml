@@ -1,0 +1,28 @@
+name: "RB-Promo"
+on:
+  workflow_dispatch:
+
+permissions:
+  # This is required for requesting the OIDC token
+  id-token: write
+  # This is required for actions/checkout
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          # JFrog platform url (for example: https://acme.jfrog.io)
+          JF_URL: https://${{ vars.JF_URL }}/
+        with:
+          # Name of the OIDC provider as specified on the OIDC integration page in the JFrog Platform
+          oidc-provider-name: hs-gh
+
+      - name: Run JFrog CLI
+        run: |
+          # Ping the server
+          jf rbp --project=hs hsRB3 1.0.0 test1
