@@ -26,4 +26,4 @@ jobs:
         run: |
           # Ping the server
           jf docker pull hts2-hs-new-docker.jfrog.io/mongo:noble
-          jf docker push hts2-hs-new-docker.jfrog.io/mongo:noble
+          jf docker scan hts2-hs-new-docker.jfrog.io/mongo:noble --watches hs
