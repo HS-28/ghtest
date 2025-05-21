@@ -25,5 +25,5 @@ jobs:
       - name: Run JFrog CLI
         run: |
           # Ping the server
-          jf docker pull hts2-hs-new-docker.jfrog.io/mongo:4.2.0-rc2-bionic
-          jf docker scan hts2-hs-new-docker.jfrog.io/mongo:4.2.0-rc2-bionic --watches hs
+          jf docker pull hts2-hs-new-docker.jfrog.io/node:10.14.2-jessie
+          jf docker scan hts2-hs-new-docker.jfrog.io/node:10.14.2-jessie --watches hs
