@@ -25,5 +25,5 @@ jobs:
       - name: Run JFrog CLI
         run: |
           # Ping the server
-          jf docker pull hts2-hs-new-docker.jfrog.io/node:9.10-slim
-          jf docker scan hts2-hs-new-docker.jfrog.io/node:9.10-slim --watches hs
+          jf docker pull hts2-hs-new-docker.jfrog.io/exposures:latest
+          jf docker scan hts2-hs-new-docker.jfrog.io/exposures:latest --watches hs
