@@ -25,4 +25,4 @@ jobs:
       - name: Run JFrog CLI
         run: |
           # Ping the server
-          jf rbp --project=hs hsMemCachD 1.0.0 test1
+          jf rbp --project=hs hsBusyB 1.0.0 test1
