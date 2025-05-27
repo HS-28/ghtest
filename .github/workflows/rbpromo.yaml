@@ -1,4 +1,4 @@
-name: "RB-Promo"
+name: "RB-Promo hsRB3"
 on:
   workflow_dispatch:
 
