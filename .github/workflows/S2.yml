@@ -25,5 +25,5 @@ jobs:
       - name: Run JFrog CLI
         run: |
           # Ping the server
-          jf docker pull hts2-hs-new-docker.jfrog.io/mongo:noble
-          jf docker scan hts2-hs-new-docker.jfrog.io/mongo:noble
+          jf docker pull hts2-hs-new-docker.jfrog.io/memcached:bookworm
+          jf docker scan hts2-hs-new-docker.jfrog.io/memcached:bookworm
