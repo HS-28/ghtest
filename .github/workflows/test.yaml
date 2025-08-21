@@ -16,6 +16,7 @@ jobs:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         env:
+          JFROG_CLI_LOG_LEVEL: DEBUG
           # JFrog platform url (for example: https://acme.jfrog.io)
           JF_URL: https://${{ vars.JF_URL }}/
         with:
