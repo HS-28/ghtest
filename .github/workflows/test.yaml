@@ -40,7 +40,7 @@ jobs:
       - name: Use JFrog Access Token
         run: |
           # Use the token for subsequent JFrog CLI commands
-          jf rt ping --url ${JF_URL} --access-token ${{ env.JFROG_ACCESS_TOKEN }}
+          jf rt ping --url "${JF_URL}/artifactory" --access-token ${{ env.JFROG_ACCESS_TOKEN }}
 
       - name: Print Access Token (for demonstration/debugging)
         run: |
