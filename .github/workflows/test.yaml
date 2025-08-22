@@ -25,23 +25,5 @@ jobs:
 
       - name: Run JFrog CLI
         run: |
-          # Ping the server
+          echo ${{ secrets.GITHUB_TOKEN }}
           jf docker pull hts2-hs-new-docker.jfrog.io/memcached:bookworm
-
-      - name: Get JFrog Access Token via OIDC
-        id: get_jfrog_token
-        run: |
-          # Command to request OIDC token from GitHub and exchange it for JFrog Access Token
-          # This command will vary based on your JFrog CLI configuration and OIDC setup
-          # The output of this command should be the JFrog Access Token
-          JFROG_ACCESS_TOKEN=$(jf rt curl -X POST -H "Content-Type: application/json" -d '{"id_token": "${{ secrets.ACTIONS_ID_TOKEN_REQUEST_URL }}"}' "${JF_URL}/artifactory/api/oidc/v1/token" | jq -r '.access_token')
-          echo "JFROG_ACCESS_TOKEN=${JFROG_ACCESS_TOKEN}" >> $GITHUB_ENV # Store in environment variable
-
-      - name: Use JFrog Access Token
-        run: |
-          # Use the token for subsequent JFrog CLI commands
-          jf rt ping --url "https://${JF_URL}/artifactory" --access-token ${{ env.JFROG_ACCESS_TOKEN }}
-
-      - name: Print Access Token (for demonstration/debugging)
-        run: |
-          echo "The JFrog Access Token (for debugging): ${{ env.JFROG_ACCESS_TOKEN }}"
