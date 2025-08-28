@@ -17,7 +17,6 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4
         env:
           JFROG_CLI_LOG_LEVEL: DEBUG
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # JFrog platform url (for example: https://acme.jfrog.io)
           JF_URL: https://${{ vars.JF_URL }}/
         with:
@@ -26,5 +25,6 @@ jobs:
 
       - name: Run JFrog CLI
         run: |
-          echo $GH_TOKEN
+          # Ping the server
           jf docker pull hts2-hs-new-docker.jfrog.io/memcached:bookworm
+          jf docker push hts2-hs-new-docker.jfrog.io/memcached:bookworm
