@@ -26,6 +26,6 @@ jobs:
       - name: Run JFrog CLI
         run: |
           # Ping the server
-          jf docker pull hts2-hs-new-docker.jfrog.io/nimak/helloworld
-          jf docker push hts2-hs-new-docker.jfrog.io/nimak/helloworld
+          jf docker pull hts2-hs-new-docker.jfrog.io/memcached:bookworm
+          jf docker push hts2-hs-new-docker.jfrog.io/memcached:bookworm
           jf rt bp hs-demo 1
