@@ -29,4 +29,5 @@ jobs:
       - name: Configure and Restore NuGet
         run: |
           
+          jf nuget-config --repo-resolve=hs-nuget-remo
           jf nuget install Newtonsoft.Json -Source hs-nuget-rem
