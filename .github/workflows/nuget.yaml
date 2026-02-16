@@ -26,8 +26,13 @@ jobs:
         with:
           dotnet-version: '8.0.x' # Use your required version
 
-      - name: Configure and Restore NuGet
+      - name: Pull Single Package
         run: |
-          
-          jf nuget-config --repo-resolve=hs-nuget-remo
-          jf nuget install Newtonsoft.Json -Source hs-nuget-rem
+              # Use 'jf dotnet' instead of 'jf nuget' to avoid the Mono requirement.
+              # This command adds the package to a temporary 'dummy' project 
+              # which effectively pulls it from Artifactory.
+              dotnet new console -n temp-pull
+              cd temp-pull
+              jf dotnet-config --repo-resolve=hs-nuget-remo
+              jf dotnet add package Newtonsoft.Json
+            
