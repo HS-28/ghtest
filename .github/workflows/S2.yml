@@ -24,25 +24,6 @@ jobs:
         with:
           oidc-provider-name: hs-gh
 
-      # 2. RUN THIS SECOND: Now 'jf' will work perfectly
-      - name: Extract GitHub OIDC Token
-        run: |
-          # Fetch the raw token from GitHub using your audience string
-          RAW_TOKEN=$(curl -s -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=hs-gh" | jq -r '.value')
-          
-          echo "=== COPY BASE64 STRING BELOW ==="
-          echo "$RAW_TOKEN" | base64 -w 0
-          echo -e "\n=============================="
-          
-          echo "=== JFrog Access Token ==="
-          # Switched provider name to 'hs-gh' to match your setup
-          ACCESS_TOKEN=$(jf exchange-oidc-token hs-gh $RAW_TOKEN | jq -r '.AccessToken')
-          echo "$ACCESS_TOKEN"
-          echo -e "\n=============================="
-          
-          echo "=== JFrog Token Permissions==="
-          curl -s -H "Authorization: Bearer $ACCESS_TOKEN" "https://${{ vars.JF_URL }}/access/api/v1/tokens/me" | jq
-          echo -e "\n=============================="
 
       - name: Run JFrog CLI
         run: |
