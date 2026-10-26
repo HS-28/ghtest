@@ -1,32 +1,59 @@
-name: "S2"
+name: "JFrog Security Demo (OIDC & Container Scan)"
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ "main" ]
 
 permissions:
-  # This is required for requesting the OIDC token
-  id-token: write
-  # This is required for actions/checkout
-  contents: read
+  id-token: write        # Required for GitHub OIDC authentication
+  contents: read         # Required to check out code
+  security-events: write # Required to publish SARIF results into GitHub Security tab
+
+env:
+  JF_URL: "https://${{ vars.JF_URL }}/"
+  OIDC_PROVIDER: "hs-gh"
+  IMAGE_NAME: "hts2-hs-new-docker.jfrog.io/memcached:bookworm"
 
 jobs:
-  build:
+  jfrog-security-pipeline:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. MOVE THIS UP: Install the JFrog CLI first so the 'jf' command is available next
+      # Step 1: Authenticate to Artifactory via OIDC (No static tokens)
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         env:
-          JF_URL: https://${{ vars.JF_URL }}/
+          JF_URL: ${{ env.JF_URL }}
         with:
-          oidc-provider-name: hs-gh
+          oidc-provider-name: ${{ env.OIDC_PROVIDER }}
 
-
-      - name: Run JFrog CLI
+      # Step 2: Pull the base image using Artifactory as the trusted registry
+      - name: Pull Docker Image
         run: |
-          # Ping the server
-          jf docker pull hts2-hs-new-docker.jfrog.io/memcached:bookworm
-          jf docker scan hts2-hs-new-docker.jfrog.io/memcached:bookworm
+          echo "Pulling verified image from Artifactory..."
+          jf docker pull ${{ env.IMAGE_NAME }}
+
+      # Step 3: Run JFrog Xray Security Scan (Console Summary)
+      - name: Scan Image with JFrog Xray
+        run: |
+          echo "Scanning container image for CVEs, licenses, and malware..."
+          # --vuln displays all detected CVEs; --fail=false ensures CI demo completes
+          jf docker scan ${{ env.IMAGE_NAME }} --vuln --fail=false
+
+      # Step 4: Export Scan to SARIF for GitHub Integration
+      - name: Generate SARIF Security Report
+        if: always()
+        run: |
+          echo "Exporting scan results to SARIF format..."
+          jf docker scan ${{ env.IMAGE_NAME }} --format=sarif --fail=false > jfrog-docker-scan.sarif || true
+
+      # Step 5: Surface Findings directly in GitHub UI
+      - name: Upload Findings to GitHub Security Dashboard
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: jfrog-docker-scan.sarif
+          category: "JFrog-Container-Scan"
